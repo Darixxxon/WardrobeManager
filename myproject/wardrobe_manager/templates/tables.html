@@ -1,0 +1,254 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="pl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tabele w Bazie</title>
+    <script>
+      function toggleTable(tableId) {
+        let tables = document.querySelectorAll('.data-table')
+        tables.forEach((table) => {
+          if (table.id === tableId) {
+            table.style.display = table.style.display === 'none' || table.style.display === '' ? 'block' : 'none'
+          } else {
+            table.style.display = 'none'
+          }
+        })
+      }
+    </script>
+    <style>
+      .data-table {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Tabele w Bazie</h1>
+
+    <!-- Przyciski do przełączania tabel -->
+    <button onclick="toggleTable('shoes_table')">Shoes</button>
+    <button onclick="toggleTable('pants_table')">Pants</button>
+    <button onclick="toggleTable('bases_table')">Bases</button>
+    <button onclick="toggleTable('overtops_table')">Overtops</button>
+    <button onclick="toggleTable('coats_table')">Coats</button>
+    <button onclick="toggleTable('hats_table')">Hats</button>
+    <button onclick="toggleTable('combinations_table')">Combinations</button>
+
+    <!-- Tabela SHOES -->
+    <div id="shoes_table" class="data-table">
+      <h2>Shoes</h2>
+      <table border="1">
+        <tr>
+          <th>ID</th>
+          <th>Brand</th>
+          <th>Model</th>
+          <th>Size</th>
+          <th>Colour 1</th>
+          <th>Colour 2</th>
+          <th>Type</th>
+          <th>Photo</th>
+        </tr>
+        {% for shoe in shoes %}
+          <tr>
+            <td>{{ shoe.id }}</td>
+            <td>{{ shoe.brand }}</td>
+            <td>{{ shoe.model }}</td>
+            <td>{{ shoe.size }}</td>
+            <td>{{ shoe.colour_1 }}</td>
+            <td>{{ shoe.colour_2 }}</td>
+            <td>{{ shoe.type }}</td>
+            <td>
+              <img src="{{ shoe.dir }}" alt="Photo of shoe" style="max-width: 100px; max-height: 100px;" />
+            </td>
+          </tr>
+        {% endfor %}
+      </table>
+    </div>
+
+    <!-- Tabela PANTS -->
+    <div id="pants_table" class="data-table">
+      <h2>Pants</h2>
+      <table border="1">
+        <tr>
+          <th>ID</th>
+          <th>Brand</th>
+          <th>Size</th>
+          <th>Length</th>
+          <th>Type</th>
+          <th>Colour_1</th>
+          <th>Colour_2</th>
+          <th>Style</th>
+          <th>Photo</th>
+        </tr>
+        {% for pant in pants %}
+          <tr>
+            <td>{{ pant.id }}</td>
+            <td>{{ pant.brand }}</td>
+            <td>{{ pant.size }}</td>
+            <td>{{ pant.length }}</td>
+            <td>{{ pant.type }}</td>
+            <td>{{ pant.style }}</td>
+            <td>{{ pant.colour_1 }}</td>
+            <td>{{ pant.colour_2 }}</td>
+            <td>
+              <img src="{{ pant.dir }}" alt="Photo of pant" style="max-width: 100px; max-height: 100px;" />
+            </td>
+          </tr>
+        {% endfor %}
+      </table>
+    </div>
+
+    <!-- Tabela BASES -->
+    <div id="bases_table" class="data-table">
+      <h2>Bases</h2>
+      <table border="1">
+        <tr>
+          <th>ID</th>
+          <th>Brand</th>
+          <th>Size</th>
+          <th>Length</th>
+          <th>Type</th>
+          <th>Style</th>
+          <th>Colour_1</th>
+          <th>Colour_2</th>
+          <th>Photo</th>
+        </tr>
+        {% for base in bases %}
+          <tr>
+            <td>{{ base.id }}</td>
+            <td>{{ base.brand }}</td>
+            <td>{{ base.size }}</td>
+            <td>{{ base.length }}</td>
+            <td>{{ base.type }}</td>
+            <td>{{ base.style }}</td>
+            <td>{{ base.colour_1 }}</td>
+            <td>{{ base.colour_2 }}</td>
+            <td>
+              <img src="{{ base.dir }}" alt="Photo of base" style="max-width: 100px; max-height: 100px;" />
+            </td>
+          </tr>
+        {% endfor %}
+      </table>
+    </div>
+
+    <!-- Tabela OVERTOPS -->
+    <div id="overtops_table" class="data-table">
+      <h2>Overtops</h2>
+      <table border="1">
+        <tr>
+          <th>ID</th>
+          <th>Brand</th>
+          <th>Size</th>
+          <th>Type</th>
+          <th>Style</th>
+          <th>Colour_1</th>
+          <th>Colour_2</th>
+          <th>Photo</th>
+        </tr>
+        {% for overtop in overtops %}
+          <tr>
+            <td>{{ overtop.id }}</td>
+            <td>{{ overtop.brand }}</td>
+            <td>{{ overtop.size }}</td>
+            <td>{{ overtop.type }}</td>
+            <td>{{ overtop.style }}</td>
+            <td>{{ overtop.colour_1 }}</td>
+            <td>{{ overtop.colour_2 }}</td>
+            <td>
+              <img src="{{ overtop.dir }}" alt="Photo of overtop" style="max-width: 100px; max-height: 100px;" />
+            </td>
+          </tr>
+        {% endfor %}
+      </table>
+    </div>
+
+    <!-- Tabela COATS -->
+    <div id="coats_table" class="data-table">
+      <h2>Coats</h2>
+      <table border="1">
+        <tr>
+          <th>ID</th>
+          <th>Brand</th>
+          <th>Size</th>
+          <th>Type</th>
+          <th>Style</th>
+          <th>Colour_1</th>
+          <th>Colour_2</th>
+          <th>Photo</th>
+        </tr>
+        {% for coat in coats %}
+          <tr>
+            <td>{{ coat.id }}</td>
+            <td>{{ coat.brand }}</td>
+            <td>{{ coat.size }}</td>
+            <td>{{ coat.type }}</td>
+            <td>{{ coat.style }}</td>
+            <td>{{ coat.colour_1 }}</td>
+            <td>{{ coat.colour_2 }}</td>
+            <td>
+              <img src="{{ coat.dir }}" alt="Photo of coat" style="max-width: 100px; max-height: 100px;" />
+            </td>
+          </tr>
+        {% endfor %}
+      </table>
+    </div>
+
+    <!-- Tabela HATS -->
+    <div id="hats_table" class="data-table">
+      <h2>Hats</h2>
+      <table border="1">
+        <tr>
+          <th>ID</th>
+          <th>Brand</th>
+          <th>Size</th>
+          <th>Type</th>
+          <th>Colour_1</th>
+          <th>Colour_2</th>
+          <th>Photo</th>
+        </tr>
+        {% for hat in hats %}
+          <tr>
+            <td>{{ hat.id }}</td>
+            <td>{{ hat.brand }}</td>
+            <td>{{ hat.size }}</td>
+            <td>{{ hat.type }}</td>
+            <td>{{ hat.colour_1 }}</td>
+            <td>{{ hat.colour_2 }}</td>
+            <td>
+              <img src="{{ hat.dir }}" alt="Photo of hat" style="max-width: 100px; max-height: 100px;" />
+            </td>
+          </tr>
+        {% endfor %}
+      </table>
+    </div>
+
+    <!-- Tabela COMBINATIONS -->
+    <div id="combinations_table" class="data-table">
+      <h2>Combinations</h2>
+      <table border="1">
+        <tr>
+          <th>ID</th>
+          <th>Shoes</th>
+          <th>Pants</th>
+          <th>Base</th>
+          <th>Overtop</th>
+          <th>Coat</th>
+          <th>Hat</th>
+        </tr>
+        {% for combination in combinations %}
+          <tr>
+            <td>{{ combination.id }}</td>
+            <td>{{ combination.shoes_id }}</td>
+            <td>{{ combination.pants_id }}</td>
+            <td>{{ combination.base_id }}</td>
+            <td>{{ combination.overtop_id }}</td>
+            <td>{{ combination.coat_id }}</td>
+            <td>{{ combination.hat_id }}</td>
+          </tr>
+        {% endfor %}
+      </table>
+    </div>
+  </body>
+</html>

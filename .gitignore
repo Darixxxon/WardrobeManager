@@ -173,3 +173,4 @@ cython_debug/
 myenv/
 
 myproject/myproject/settings.py
+*.jpg
