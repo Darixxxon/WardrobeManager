@@ -24,3 +24,6 @@ def show_tables(request):
         'combinations': Combinations.objects.all(),
     }
     return render(request, 'tables.html', context)
+
+def add_item(request):
+    return render(request, 'adding/add_item.html')
