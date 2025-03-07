@@ -27,3 +27,21 @@ def show_tables(request):
 
 def add_item(request):
     return render(request, 'adding/add_item.html')
+
+def add_shoes(request):
+    return render(request, 'adding/add_shoes.html')
+
+def add_pants(request):
+    return render(request, 'adding/add_pants.html')
+
+def add_base(request):
+    return render(request, 'adding/add_base.html')
+
+def add_overtop(request):
+    return render(request, 'adding/add_overtop.html')
+
+def add_coat(request):
+    return render(request, 'adding/add_coat.html')
+
+def add_hat(request):
+    return render(request, 'adding/add_hat.html')
