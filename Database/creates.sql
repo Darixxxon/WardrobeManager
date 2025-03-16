@@ -76,12 +76,12 @@ CREATE TABLE Hats (
 
 CREATE TABLE Combinations (
     id INT IDENTITY(1,1) PRIMARY KEY,
-    shoes_id INT REFERENCES Shoes(id),
-    pants_id INT REFERENCES Pants(id),
-    base_id INT REFERENCES Bases(id),
-    overtop_id INT NULL REFERENCES Overtops(id),
-    coat_id INT NULL REFERENCES Coats(id),
-    hat_id INT NULL REFERENCES Hats(id),
+    shoes_id INT REFERENCES Shoes(id) ON DELETE CASCADE,
+    pants_id INT REFERENCES Pants(id) ON DELETE CASCADE,
+    base_id INT REFERENCES Bases(id) ON DELETE CASCADE,
+    overtop_id INT NULL REFERENCES Overtops(id) ON DELETE CASCADE,
+    coat_id INT NULL REFERENCES Coats(id) ON DELETE CASCADE,
+    hat_id INT NULL REFERENCES Hats(id) ON DELETE CASCADE,
     reviewed BIT DEFAULT 0,
     rate INT NULL
 );
