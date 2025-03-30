@@ -1,4 +1,5 @@
 import os
+from django.forms import BaseForm
 from django.shortcuts import render
 
 from myproject.settings import *
@@ -78,7 +79,26 @@ def add_pants(request):
     return render(request, 'adding/add_pants.html', context)
 
 def add_base(request):
-    return render(request, 'adding/add_base.html')
+    if request.method == 'POST':
+        form = BaseForm(request.POST, request.FILES)
+        if form.is_valid():
+            new_base = form.save(commit=False)
+            path = f'base/{new_base.brand}_{new_base.size}_{new_base.length}_{new_base.type}_{new_base.colour_1}_{new_base.colour_2}_{new_base.style}.jpg'
+            path = path.replace(' ', '_')
+            
+            file_path = os.path.join(MEDIA_ROOT, path)
+            
+            if 'image' in request.FILES:
+                add_img(request, file_path)
+            
+            new_base.dir = f'/media/{path}'
+            new_base.new = 0
+            new_base.save()
+            return render(request, 'adding/add_base.html', {'form': form})
+    else:
+        form = BaseForm()
+        context = {'form': form}
+    return render(request, 'adding/add_base.html', context)
 
 def add_overtop(request):
     return render(request, 'adding/add_overtop.html')
