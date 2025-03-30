@@ -1,22 +1,22 @@
 {% block title%}
-    Add new Shoes
+    Add new Pants
 {% endblock %}
 
 {% block content%}
     <section>
-        <h1>Add new shoes</h1>
+        <h1>Add new pants</h1>
         <form action="" method="POST" enctype="multipart/form-data">
             {% csrf_token %}
             {{ form }}
 
-            <label>Paste image of new shoes</label>
+            <label>Paste image of new pants</label>
 
             <textarea id="pasteArea"></textarea>
             <input type="file" id="imageInput" name="image" accept="image/*" hidden>
             <img id="preview" style="max-width: 200px; display: none;"/>
 
 
-            <button type="submit">Add new shoes</button>
+            <button type="submit">Add new pants</button>
         </form>
     </section>
 

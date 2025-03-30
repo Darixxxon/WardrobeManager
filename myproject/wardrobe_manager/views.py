@@ -2,7 +2,7 @@ import os
 from django.shortcuts import render
 
 from myproject.settings import *
-from .forms import ShoesForm
+from .forms import PantsForm, ShoesForm
 from .models import Bases, Coats, Combinations, Hats, Overtops, Pants, Shoes
 from .functions import *
 
@@ -56,7 +56,26 @@ def add_shoes(request):
     return render(request, 'adding/add_shoes.html', context)
 
 def add_pants(request):
-    return render(request, 'adding/add_pants.html')
+    if request.method == 'POST':
+        form = PantsForm(request.POST, request.FILES)
+        if form.is_valid():
+            new_pants = form.save(commit=False)
+            path = f'pants/{new_pants.brand}_{new_pants.size}_{new_pants.length}_{new_pants.type}_{new_pants.colour_1}_{new_pants.colour_2}_{new_pants.style}.jpg'
+            path = path.replace(' ', '_')
+            
+            file_path = os.path.join(MEDIA_ROOT, path)
+            
+            if 'image' in request.FILES:
+                add_img(request, file_path)
+            
+            new_pants.dir = f'/media/{path}'
+            new_pants.new = 0
+            new_pants.save()
+            return render(request, 'adding/add_pants.html', {'form': form})
+    else:
+        form = PantsForm()
+        context = {'form': form}
+    return render(request, 'adding/add_pants.html', context)
 
 def add_base(request):
     return render(request, 'adding/add_base.html')
