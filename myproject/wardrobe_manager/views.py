@@ -2,7 +2,7 @@ import os
 from django.shortcuts import render
 
 from myproject.settings import *
-from .forms import BasesForm, PantsForm, ShoesForm
+from .forms import BasesForm, OvertopsForm, PantsForm, ShoesForm
 from .models import Bases, Coats, Combinations, Hats, Overtops, Pants, Shoes
 from .functions import *
 
@@ -82,7 +82,7 @@ def add_base(request):
         form = BasesForm(request.POST, request.FILES)
         if form.is_valid():
             new_base = form.save(commit=False)
-            path = f'base/{new_base.brand}_{new_base.size}_{new_base.length}_{new_base.type}_{new_base.colour_1}_{new_base.colour_2}_{new_base.style}.jpg'
+            path = f'bases/{new_base.brand}_{new_base.size}_{new_base.length}_{new_base.type}_{new_base.colour_1}_{new_base.colour_2}_{new_base.style}.jpg'
             path = path.replace(' ', '_')
             
             file_path = os.path.join(MEDIA_ROOT, path)
@@ -100,7 +100,26 @@ def add_base(request):
     return render(request, 'adding/add_base.html', context)
 
 def add_overtop(request):
-    return render(request, 'adding/add_overtop.html')
+    if request.method == 'POST':
+        form = OvertopsForm(request.POST, request.FILES)
+        if form.is_valid():
+            new_overtop = form.save(commit=False)
+            path = f'overtops/{new_overtop.brand}_{new_overtop.size}_{new_overtop.type}_{new_overtop.colour_1}_{new_overtop.colour_2}_{new_overtop.style}.jpg'
+            path = path.replace(' ', '_')
+            
+            file_path = os.path.join(MEDIA_ROOT, path)
+            
+            if 'image' in request.FILES:
+                add_img(request, file_path)
+            
+            new_overtop.dir = f'/media/{path}'
+            new_overtop.new = 0
+            new_overtop.save()
+            return render(request, 'adding/add_overtop.html', {'form': form})
+    else:
+        form = OvertopsForm()
+        context = {'form': form}
+    return render(request, 'adding/add_overtop.html', context)
 
 def add_coat(request):
     return render(request, 'adding/add_coat.html')
