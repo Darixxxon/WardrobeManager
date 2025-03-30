@@ -1,9 +1,8 @@
 import os
-from django.forms import BaseForm
 from django.shortcuts import render
 
 from myproject.settings import *
-from .forms import PantsForm, ShoesForm
+from .forms import BasesForm, PantsForm, ShoesForm
 from .models import Bases, Coats, Combinations, Hats, Overtops, Pants, Shoes
 from .functions import *
 
@@ -80,7 +79,7 @@ def add_pants(request):
 
 def add_base(request):
     if request.method == 'POST':
-        form = BaseForm(request.POST, request.FILES)
+        form = BasesForm(request.POST, request.FILES)
         if form.is_valid():
             new_base = form.save(commit=False)
             path = f'base/{new_base.brand}_{new_base.size}_{new_base.length}_{new_base.type}_{new_base.colour_1}_{new_base.colour_2}_{new_base.style}.jpg'
@@ -96,7 +95,7 @@ def add_base(request):
             new_base.save()
             return render(request, 'adding/add_base.html', {'form': form})
     else:
-        form = BaseForm()
+        form = BasesForm()
         context = {'form': form}
     return render(request, 'adding/add_base.html', context)
 
