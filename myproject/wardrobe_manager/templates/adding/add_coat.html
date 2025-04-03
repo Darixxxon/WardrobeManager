@@ -1,0 +1,53 @@
+{% block title%}
+    Add new Coat
+{% endblock %}
+
+{% block content%}
+    <section>
+        <h1>Add new coat</h1>
+        <form action="" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form }}
+
+            <label>Paste image of new coat</label>
+
+            <textarea id="pasteArea"></textarea>
+            <input type="file" id="imageInput" name="image" accept="image/*" hidden>
+            <img id="preview" style="max-width: 200px; display: none;"/>
+
+
+            <button type="submit">Add new coat</button>
+        </form>
+    </section>
+
+    <section>
+        <h1>Return to add page</h1>
+        <a href="/add/">
+            <button>
+                Add page
+            </button>
+        </a>
+    </section>
+
+    <script>
+        document.getElementById('pasteArea').addEventListener('paste', function(event) {
+            const items = (event.clipboardData || event.originalEvent.clipboardData).items;
+            for (let item of items) {
+                if (item.type.indexOf("image") !== -1) {
+                    const file = item.getAsFile();
+                    const reader = new FileReader();
+                    reader.onload = function(event) {
+                        const imgElement = document.getElementById('preview');
+                        imgElement.src = event.target.result;
+                        imgElement.style.display = 'block';
+
+                        const dataTransfer = new DataTransfer();
+                        dataTransfer.items.add(file);
+                        document.getElementById('imageInput').files = dataTransfer.files;
+                    };
+                    reader.readAsDataURL(file);
+                }
+            }
+        });
+    </script>
+{% endblock %}
