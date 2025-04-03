@@ -2,7 +2,7 @@ import os
 from django.shortcuts import render
 
 from myproject.settings import *
-from .forms import BasesForm, CoatsForm, OvertopsForm, PantsForm, ShoesForm
+from .forms import BasesForm, CoatsForm, HatsForm, OvertopsForm, PantsForm, ShoesForm
 from .models import Bases, Coats, Combinations, Hats, Overtops, Pants, Shoes
 from .functions import *
 
@@ -144,4 +144,23 @@ def add_coat(request):
     return render(request, 'adding/add_coat.html', context)
 
 def add_hat(request):
-    return render(request, 'adding/add_hat.html')
+    if request.method == 'POST':
+        form = HatsForm(request.POST, request.FILES)
+        if form.is_valid():
+            new_hat = form.save(commit=False)
+            path = f'hats/{new_hat.brand}_{new_hat.size}_{new_hat.type}_{new_hat.colour_1}_{new_hat.colour_2}.jpg'
+            path = path.replace(' ', '_')
+            
+            file_path = os.path.join(MEDIA_ROOT, path)
+            
+            if 'image' in request.FILES:
+                add_img(request, file_path)
+            
+            new_hat.dir = f'/media/{path}'
+            new_hat.new = 0
+            new_hat.save()
+            return render(request, 'adding/add_hat.html', {'form': form})
+    else:
+        form = HatsForm()
+        context = {'form': form}
+    return render(request, 'adding/add_hat.html', context)
