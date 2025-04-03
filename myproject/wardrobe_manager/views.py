@@ -2,7 +2,7 @@ import os
 from django.shortcuts import render
 
 from myproject.settings import *
-from .forms import BasesForm, OvertopsForm, PantsForm, ShoesForm
+from .forms import BasesForm, CoatsForm, OvertopsForm, PantsForm, ShoesForm
 from .models import Bases, Coats, Combinations, Hats, Overtops, Pants, Shoes
 from .functions import *
 
@@ -122,7 +122,26 @@ def add_overtop(request):
     return render(request, 'adding/add_overtop.html', context)
 
 def add_coat(request):
-    return render(request, 'adding/add_coat.html')
+    if request.method == 'POST':
+        form = CoatsForm(request.POST, request.FILES)
+        if form.is_valid():
+            new_coat = form.save(commit=False)
+            path = f'coats/{new_coat.brand}_{new_coat.size}_{new_coat.type}_{new_coat.style}_{new_coat.colour_1}_{new_coat.colour_2}.jpg'
+            path = path.replace(' ', '_')
+            
+            file_path = os.path.join(MEDIA_ROOT, path)
+            
+            if 'image' in request.FILES:
+                add_img(request, file_path)
+            
+            new_coat.dir = f'/media/{path}'
+            new_coat.new = 0
+            new_coat.save()
+            return render(request, 'adding/add_coat.html', {'form': form})
+    else:
+        form = CoatsForm()
+        context = {'form': form}
+    return render(request, 'adding/add_coat.html', context)
 
 def add_hat(request):
     return render(request, 'adding/add_hat.html')

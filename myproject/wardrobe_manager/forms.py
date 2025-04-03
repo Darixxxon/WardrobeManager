@@ -24,7 +24,7 @@ class OvertopsForm(forms.ModelForm):
 class CoatsForm(forms.ModelForm):
     class Meta:
         model = Coats
-        fields = ['brand', 'size', 'type', 'style', 'colour_1', 'colour_2', 'style', 'dir']
+        fields = ['brand', 'size', 'type', 'style', 'colour_1', 'colour_2', 'dir']
     
 class HatsForm(forms.ModelForm):
     class Meta:
